@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Robo Sapiens</title>
+    <style>
+      body {
+        font-family: helvetica;
+        display: flex ;
+        flex-direction: column;
+        align-items: center;
+        background: radial-gradient(#3c3c40,#1d1d1d);
+        height:100vh;
+      }
+      
+      .message {
+        border-radius: 20px;
+        padding: 8px 15px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        display: inline-block;
+        max-width: 600px;
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+      
+      .yours {
+        align-items: flex-start;
+      }
+      
+      .yours .message {
+        margin-right: 25%;
+        background-color: #eee;
+        position: relative;
+      }
+      
+      .yours .message.last:before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        bottom: 0;
+        left: -7px;
+        height: 20px;
+        width: 20px;
+        background: #eee;
+        border-bottom-right-radius: 15px;
+      }
+      .yours .message.last:after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        left: -10px;
+        width: 10px;
+        height: 20px;
+        background: white;
+        border-bottom-right-radius: 10px;
+      }
+
+      .mine .message {
+        color: white;
+        background: linear-gradient(to bottom, #00D0EA 0%, #0085D1 100%);
+        background-attachment: fixed;
+        position: relative;
+      }
+      
+      .mine .message.last:before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        bottom: 0;
+        right: -8px;
+        height: 20px;
+        width: 20px;
+        background: linear-gradient(to bottom, #00D0EA 0%, #0085D1 100%);
+        background-attachment: fixed;
+        border-bottom-left-radius: 15px;
+      }
+      
+      .mine .message.last:after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        right: -10px;
+        width: 10px;
+        height: 20px;
+        background: white;
+        border-bottom-left-radius: 10px;
+      }
+      .cute-robot-v1 {
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .cute-robot-v1 * {
+        box-sizing: border-box;
+      }
+      .cute-robot-v1 .circle-bg {
+        background: #cedbdd;
+        width: 250px;
+        height: 250px;
+        border-radius: 100%;
+        border: 8px solid #195272;
+        position: relative;
+      }
+      .cute-robot-v1 .circle-bg:after {
+        position: absolute;
+        z-index: 2;
+        height: 100%;
+        width: 100%;
+        top: -3px;
+        left: 0;
+        border-radius: 100%;
+        border-bottom: 10px solid #195272;
+      }
+      .cute-robot-v1 .circle-bg:hover .robot-face {
+        top: 40px !important;
+      }
+      .cute-robot-v1 .circle-bg:hover .eyes {
+        top: 30px !important;
+      }
+      .cute-robot-v1 .circle-bg:hover .mouth {
+        background: #195272;
+        border: none;
+        clip-path: polygon(0% 30%, 100% 30%, 100% 100%, 0% 100%);
+      }
+      .cute-robot-v1 .circle-bg:hover .mouth:after {
+        content: "";
+        position: absolute;
+        height: 80%;
+        width: 80%;
+        bottom: -30%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #f9bbbb;
+        border-radius: 100%;
+      }
+      .cute-robot-v1 .circle-bg .robot-head {
+        height: 200px;
+        width: 200px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -20px;
+        border: 8px solid #195272;
+        border-radius: 85px/60px;
+        background: #ffffff;
+        z-index: 4;
+      }
+      .cute-robot-v1 .circle-bg .robot-head:after {
+        content: "";
+        position: absolute;
+        top: -30px;
+        height: 30px;
+        width: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #195272;
+      }
+      .cute-robot-v1 .circle-bg .robot-head:before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 20px;
+        width: 20px;
+        background: #cedbdd;
+        border: 8px solid #195272;
+        border-radius: 100%;
+      }
+      .cute-robot-v1 .circle-bg .robot-head .robot-face {
+        height: 120px;
+        width: 160px;
+        background: #cedbdd;
+        position: absolute;
+        top: 45px;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 8px solid #195272;
+        transition: all 200ms;
+        border-radius: 45px;
+      }
+      .cute-robot-v1 .circle-bg .robot-head .robot-face .eyes {
+        height: 20px;
+        width: 20px;
+        background: #195272;
+        border-radius: 100%;
+        position: absolute;
+        transition: all 200ms;
+        top: 40px;
+      }
+      .cute-robot-v1 .circle-bg .robot-head .robot-face .eyes.left {
+        left: 30px;
+      }
+      .cute-robot-v1 .circle-bg .robot-head .robot-face .eyes.right {
+        right: 30px;
+      }
+      .cute-robot-v1 .circle-bg .robot-head .robot-face .mouth {
+        height: 45px;
+        width: 45px;
+        border-radius: 100%;
+        border: 8px solid transparent;
+        border-bottom-color: #195272;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 50px;
+        overflow: hidden;
+      }
+      .cute-robot-v1 .circle-bg .robot-ear {
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        border-radius: 100%;
+        background: #ffffff;
+        border: 8px solid #195272;
+        z-index: 3;
+        top: 30px;
+      }
+      .cute-robot-v1 .circle-bg .robot-ear.left {
+        left: -20px;
+      }
+      .cute-robot-v1 .circle-bg .robot-ear.right {
+        right: -20px;
+      }
+      .cute-robot-v1 .circle-bg .robot-body {
+        height: 50px;
+        width: 100px;
+        border: 8px solid #195272;
+        background: #ffffff;
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 25px 25px 30px 30px;
+      }
+      .pushable {
+        background: hsl(340deg 100% 32%);
+        border-radius: 12px;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        outline-offset: 4px;
+      }
+      .front {
+        display: block;
+        padding: 12px 42px;
+        border-radius: 12px;
+        font-size: 1.25rem;
+        background: hsl(345deg 100% 47%);
+        color: white;
+        transform: translateY(-6px);
+      }
+    
+      .pushable:active .front {
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cute-robot-v1">
+      <div class="circle-bg">
+        <div class="robot-ear left"></div>
+        <div class="robot-head">
+          <div class="robot-face">
+            <div class="eyes left"></div>
+            <div class="eyes right"></div>
+            <div class="mouth"></div>
+          </div>
+        </div>
+        <div class="robot-ear right"></div>
+        <div class="robot-body"></div>
+      </div>
+      <div class="chat">
+        <div class="mine messages">
+          <div class="message">
+            {{text}}
+          </div> 
+        </div>
+      </div>
+    </div>
+      <form action="/" method="POST">
+        <div class="input-group">
+          <div class="form-outline">
+            <input type="search" id="form1" class="form-control" name="textbox"/>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Ask
+          </button>
+        </div>
+        </div>
+      </form>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
